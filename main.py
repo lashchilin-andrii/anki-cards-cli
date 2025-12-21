@@ -4,8 +4,8 @@ warnings.filterwarnings(
     "ignore", message="pkg_resources is deprecated", category=UserWarning
 )
 
-import argparse
-from src.services import en_to_en
+import argparse  # noqa: E402
+from src.services import en_to_en  # noqa: E402
 
 
 def main():
