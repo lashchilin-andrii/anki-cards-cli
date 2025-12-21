@@ -1,35 +1,22 @@
 import warnings
+
 warnings.filterwarnings(
-    "ignore",
-    message="pkg_resources is deprecated",
-    category=UserWarning,
+    "ignore", message="pkg_resources is deprecated", category=UserWarning
 )
 
 import argparse
 from src.services import en_to_en
 
 
-
 def main():
-    parser = argparse.ArgumentParser(
-        description="A script to make simple Anki word cards."
-    )
+    parser = argparse.ArgumentParser(description="Create simple Anki-style word cards.")
     parser.add_argument("words", nargs="+", help="List the words separated by spaces.")
     parser.add_argument(
-        "--path",
-        type=str,
-        required=False,
-        help="Path to save the Anki deck (optional if defined in .env).",
-    )
-    parser.add_argument(
-        "--deck",
-        type=str,
-        required=False,
-        help="Name of an Anki deck (optional if defined in .env).",
+        "--path", type=str, required=True, help="Path to save the word notes."
     )
     args = parser.parse_args()
 
-    en_to_en.run(args.words, args.path, args.deck)
+    en_to_en.run(args.words, args.path)
 
 
 if __name__ == "__main__":
