@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.models.entry import Entry
+from src.model.entry import Entry
 
 
 class BaseDictionary(ABC):

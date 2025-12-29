@@ -1,4 +1,4 @@
-from .cambridge import CambridgeDictionary
+from src.dictionary.en.en.cambridge import CambridgeDictionary
 
 DICTIONARIES = {
     "cambridge": CambridgeDictionary,

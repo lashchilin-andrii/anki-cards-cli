@@ -1,5 +1,5 @@
-from src.dictionaries import DICTIONARIES
-from src.services.en.to_en import EnToEnService
+from src.dictionary import DICTIONARIES
+from src.service.en.en import EnToEnService
 
 SERVICES = {
     ("en", "en"): EnToEnService,

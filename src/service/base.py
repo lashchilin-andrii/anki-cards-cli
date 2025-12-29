@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import os
 from datetime import date
 
-from src.dictionaries.base import BaseDictionary
+from src.dictionary.base import BaseDictionary
 
 
 class BaseService(ABC):

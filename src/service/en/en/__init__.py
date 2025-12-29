@@ -1,6 +1,6 @@
 from questionary import checkbox
-from src.services.base import BaseService
-from src.models.entry import Entry
+from src.service.base import BaseService
+from src.model.entry import Entry
 
 
 class EnToEnService(BaseService):

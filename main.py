@@ -5,7 +5,7 @@ warnings.filterwarnings(
 )
 
 import argparse  # noqa: E402
-from src.services import create_service  # noqa: E402
+from src.service import create_service  # noqa: E402
 
 
 def main():
