@@ -1,14 +1,10 @@
 from questionary import checkbox
 from src.services.base import BaseService
-from src.dictionaries.base import BaseDictionary
 from src.models.entry import Entry
 
 
 class EnToEnService(BaseService):
     """English-to-English note-taking service using any dictionary."""
-
-    def __init__(self, dictionary: BaseDictionary):
-        self.dictionary = dictionary
 
     # ---------- DICTIONARY ----------
 

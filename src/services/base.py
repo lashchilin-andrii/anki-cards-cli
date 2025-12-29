@@ -2,14 +2,14 @@ from abc import ABC, abstractmethod
 import os
 from datetime import date
 
+from src.dictionaries.base import BaseDictionary
+
 
 class BaseService(ABC):
     """Base interface for word-processing services."""
 
-    @abstractmethod
-    def process_words(self, words: list[str]) -> list[str]:
-        """Return formatted notes."""
-        raise NotImplementedError
+    def __init__(self, dictionary: BaseDictionary):
+        self.dictionary = dictionary
 
     @abstractmethod
     def run(self, words: list[str], path: str) -> None:
