@@ -1,8 +1,8 @@
 import argparse
 from questionary import checkbox
 
-from src.service import create_service
-from src.service.en.en import EnToEnService
+from backend.service import create_service
+from backend.service.en.en import EnToEnService
 
 
 def parse_args():

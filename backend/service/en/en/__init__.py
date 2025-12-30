@@ -1,5 +1,5 @@
-from src.service.base import BaseService
-from src.model.entry import Entry
+from backend.service.base import BaseService
+from backend.model.entry import Entry
 import os
 from datetime import date
 

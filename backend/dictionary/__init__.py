@@ -1,4 +1,4 @@
-from src.dictionary.en.en.cambridge import CambridgeDictionary
+from backend.dictionary.en.en.cambridge import CambridgeDictionary
 
 DICTIONARIES = {
     "cambridge": CambridgeDictionary,

@@ -1,7 +1,7 @@
 from abc import ABC
 import os
 
-from src.dictionary.base import BaseDictionary
+from backend.dictionary.base import BaseDictionary
 
 
 class BaseService(ABC):
