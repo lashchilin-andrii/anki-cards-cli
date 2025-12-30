@@ -1,84 +1,65 @@
-from questionary import checkbox
 from src.service.base import BaseService
 from src.model.entry import Entry
+import os
+from datetime import date
 
 
 class EnToEnService(BaseService):
     """English-to-English note-taking service using any dictionary."""
 
-    # ---------- DICTIONARY ----------
-
     def get_word_entries(self, word: str) -> list[Entry]:
-        """Fetch word entries (definitions + examples) from the injected dictionary."""
         word = word.strip()
         if not word:
             return []
+        return self.dictionary.get_entry(word)
 
-        entries = self.dictionary.get_entry(word)
-        if not entries:
-            print(f"[{self.dictionary.name}] Word '{word}' not found. Skipping.\n")
-        return entries
-
-    # ---------- USER SELECTION ----------
-
-    def select_definitions(self, entries: list[Entry]) -> list[Entry]:
-        """Let the user select definitions for a word."""
-        if not entries:
-            return []
-
-        selected_defs = checkbox(
-            f"SELECT DEFINITIONS FOR '{entries[0].spelling.upper()}'",
-            choices=[e.definition for e in entries],
-            instruction="",
-        ).ask()
-
-        if not selected_defs:
-            return []
-
-        return [e for e in entries if e.definition in selected_defs]
-
-    def select_examples(self, entry: Entry) -> Entry:
-        """Let the user select examples for a given entry."""
-        if entry.examples:
-            selected_examples = checkbox(
-                f"'{entry.spelling.upper()}' — {entry.definition.upper()}",
-                choices=entry.examples,
-                instruction="",
-            ).ask()
-            entry.examples = selected_examples or []
-        else:
-            entry.examples = []
-        return entry
-
-    # ---------- PIPELINE ----------
-
-    def process_words(self, words: list[str]) -> list[str]:
-        """Fetch, filter, and convert words to string notes."""
-        all_notes: list[str] = []
+    def get_notes_as_strings(
+        self,
+        words: list[str],
+        selections: dict[str, dict[int, list[int]]],
+    ) -> list[str]:
+        notes: list[str] = []
 
         for word in words:
             entries = self.get_word_entries(word)
             if not entries:
                 continue
 
-            selected_entries = self.select_definitions(entries)
-            if not selected_entries:
-                continue
+            word_selection = selections.get(word, {})
 
-            for entry in selected_entries:
-                entry = self.select_examples(entry)
-                all_notes.append(str(entry))
+            for idx, entry in enumerate(entries):
+                if idx not in word_selection:
+                    continue
 
-            self.clear_terminal()
+                example_indices = word_selection[idx]
+                entry.examples = [entry.examples[i] for i in example_indices]
 
-        return all_notes
+                notes.append(str(entry))
 
-    def run(self, words: list[str], path: str) -> None:
-        """Main workflow: process words and save as txt file."""
-        notes = self.process_words(words)
+        return notes
 
-        if not notes:
-            print("No notes were created. Exiting.")
+    def save_notes(
+        self,
+        path: str,
+        notes: list[str],
+        filename_prefix: str = "words",
+    ) -> None:
+        """Save notes to a dated .txt file."""
+        today = date.today()
+
+        if not os.path.isdir(path):
+            print(f"Directory does not exist: {path}")
             return
 
+        final_file = os.path.join(path, f"{filename_prefix}_{today}.txt")
+
+        try:
+            with open(final_file, "w", encoding="utf-8") as f:
+                for note in notes:
+                    f.write(note + "\n")
+            print(f"Notes saved successfully: {final_file}")
+        except Exception as e:
+            print(f"Failed to save notes: {e}")
+
+    def save_notes_to_path(self, notes: list[str], path: str):
         self.save_notes(path, notes)
