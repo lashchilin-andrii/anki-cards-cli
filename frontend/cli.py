@@ -3,6 +3,7 @@ from questionary import checkbox
 
 from backend.service import create_service
 from backend.service.en.en import EnToEnService
+import os
 
 
 def parse_args():
@@ -41,6 +42,8 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
     selections: dict[str, dict[int, list[int]]] = {}
 
     for word in words:
+        os.system("cls" if os.name == "nt" else "clear")
+
         entries = service.get_word_entries(word)
         if not entries:
             continue
@@ -49,6 +52,7 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
             checkbox(
                 f"Select definitions for '{word}'",
                 choices=[e.definition for e in entries],
+                instruction=str(),
             ).ask()
             or []
         )
@@ -59,21 +63,27 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
             if entry.definition not in selected_defs:
                 continue
 
-            selected_examples = (
-                checkbox(
-                    f"Select examples for '{entry.definition}'",
-                    choices=entry.examples,
-                ).ask()
-                or []
-            )
+            if not entry.examples:
+                example_indices = []
+            else:
+                selected_examples = (
+                    checkbox(
+                        f"Select examples for '{entry.definition}'",
+                        choices=entry.examples,
+                        instruction="",
+                    ).ask()
+                    or []
+                )
 
-            example_indices = [
-                entry.examples.index(example) for example in selected_examples
-            ]
+                example_indices = [
+                    entry.examples.index(example) for example in selected_examples
+                ]
 
             word_selection[idx] = example_indices
 
         selections[word] = word_selection
+
+        os.system("cls" if os.name == "nt" else "clear")
 
     notes = service.get_notes_as_strings(words, selections)
     service.save_notes_to_path(notes, path)
