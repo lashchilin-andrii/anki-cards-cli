@@ -8,32 +8,21 @@ class EnToEnService(BaseService):
     """English-to-English note-taking service using any dictionary."""
 
     def get_word_entries(self, word: str) -> list[Entry]:
+        """Return all entries for a word."""
         word = word.strip()
         if not word:
             return []
         return self.dictionary.get_entry(word)
 
-    def get_notes_as_strings(
+    def get_notes_as_strings_from_entries(
         self,
-        words: list[str],
-        selections: dict[str, dict[int, list[int]]],
+        selections: dict[str, list[Entry]],
     ) -> list[str]:
+        """Convert selected entries into note strings."""
         notes: list[str] = []
 
-        for word in words:
-            entries = self.get_word_entries(word)
-            if not entries:
-                continue
-
-            word_selection = selections.get(word, {})
-
-            for idx, entry in enumerate(entries):
-                if idx not in word_selection:
-                    continue
-
-                example_indices = word_selection[idx]
-                entry.examples = [entry.examples[i] for i in example_indices]
-
+        for word, entries in selections.items():
+            for entry in entries:
                 notes.append(str(entry))
 
         return notes

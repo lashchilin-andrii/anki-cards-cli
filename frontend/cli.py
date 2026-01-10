@@ -3,8 +3,7 @@ from questionary import checkbox
 
 from backend.service import create_service
 from backend.service.en.en import EnToEnService
-import os
-
+from backend.model.entry import Entry
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Create simple Anki-style word cards.")
@@ -39,11 +38,9 @@ def parse_args():
 
 
 def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
-    selections: dict[str, dict[int, list[int]]] = {}
+    selections: dict[str, list[Entry]] = {}
 
     for word in words:
-        os.system("cls" if os.name == "nt" else "clear")
-
         entries = service.get_word_entries(word)
         if not entries:
             continue
@@ -52,41 +49,43 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
             checkbox(
                 f"Select definitions for '{word}'",
                 choices=[e.definition for e in entries],
-                instruction=str(),
             ).ask()
             or []
         )
 
-        word_selection: dict[int, list[int]] = {}
+        chosen_entries: list[Entry] = []
 
-        for idx, entry in enumerate(entries):
+        for entry in entries:
             if entry.definition not in selected_defs:
                 continue
 
-            if not entry.examples:
-                example_indices = []
-            else:
+            selected_examples: list[str] = []
+
+            if entry.examples:
                 selected_examples = (
                     checkbox(
                         f"Select examples for '{entry.definition}'",
                         choices=entry.examples,
-                        instruction="",
                     ).ask()
                     or []
                 )
 
-                example_indices = [
-                    entry.examples.index(example) for example in selected_examples
-                ]
+            chosen_entries.append(
+                Entry(
+                    spelling=entry.spelling,
+                    transcription=entry.transcription,
+                    definition=entry.definition,
+                    examples=selected_examples,
+                )
+            )
 
-            word_selection[idx] = example_indices
 
-        selections[word] = word_selection
+        if chosen_entries:
+            selections[word] = chosen_entries
 
-        os.system("cls" if os.name == "nt" else "clear")
-
-    notes = service.get_notes_as_strings(words, selections)
+    notes = service.get_notes_as_strings_from_entries(selections)
     service.save_notes_to_path(notes, path)
+
 
 
 def cli_main():
