@@ -1,9 +1,10 @@
 import argparse
 from questionary import checkbox
 
-from backend.service import create_service
-from backend.service.en.en import EnToEnService
-from backend.model.entry import Entry
+from backend.dictionary import create_service
+from backend.dictionary.en.en.cambridge.service import EnToEnService
+from backend.dictionary.en.en.cambridge.model import Entry
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Create simple Anki-style word cards.")
@@ -79,13 +80,11 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
                 )
             )
 
-
         if chosen_entries:
             selections[word] = chosen_entries
 
     notes = service.get_notes_as_strings_from_entries(selections)
     service.save_notes_to_path(notes, path)
-
 
 
 def cli_main():

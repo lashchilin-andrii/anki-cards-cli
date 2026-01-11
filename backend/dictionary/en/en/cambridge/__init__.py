@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup as BS
 import pronouncing
 
-from backend.model.entry import Entry
-from backend.dictionary.base import BaseDictionary
+from backend.dictionary.en.en.cambridge.model import Entry
+from backend.dictionary.base_dictionary import BaseDictionary
 
 CAMBRIDGE_URL = "https://dictionary.cambridge.org/dictionary/english/{word}"
 
