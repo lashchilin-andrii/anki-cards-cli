@@ -50,7 +50,7 @@ def run_cli(service: BaseService, words: list[str], path: str) -> None:
             checkbox(
                 f"Select definitions for '{word}'",
                 choices=[e.definition for e in entries],
-                instruction=str(),
+                instruction="",
             ).ask()
             or []
         )
@@ -66,7 +66,7 @@ def run_cli(service: BaseService, words: list[str], path: str) -> None:
                     checkbox(
                         f"Select examples for '{entry.definition}'",
                         choices=entry.examples,
-                        instruction=str(),
+                        instruction="",
                     ).ask()
                     or []
                 )

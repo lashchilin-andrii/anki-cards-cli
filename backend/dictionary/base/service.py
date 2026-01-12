@@ -12,7 +12,7 @@ class BaseService(ABC):
 
     @abstractmethod
     def get_entry(self, word: str) -> list:
-        """Return the entry for a word."""
+        """Return the entry for a word from a dictionary."""
         raise NotImplementedError
 
     @abstractmethod
