@@ -2,7 +2,7 @@ import argparse
 from questionary import checkbox
 
 from backend.dictionary import create_service
-from backend.dictionary.en.en.cambridge.service import EnToEnService
+from backend.dictionary.base_service import BaseService
 from backend.dictionary.en.en.cambridge.model import Entry
 
 
@@ -38,11 +38,11 @@ def parse_args():
     return parser.parse_args()
 
 
-def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
-    selections: dict[str, list[Entry]] = {}
+def run_cli(service: BaseService, words: list[str], path: str) -> None:
+    chosen_entries: list[Entry] = []
 
     for word in words:
-        entries = service.get_word_entries(word)
+        entries: list = service.get_entry(word)
         if not entries:
             continue
 
@@ -50,11 +50,10 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
             checkbox(
                 f"Select definitions for '{word}'",
                 choices=[e.definition for e in entries],
+                instruction=str(),
             ).ask()
             or []
         )
-
-        chosen_entries: list[Entry] = []
 
         for entry in entries:
             if entry.definition not in selected_defs:
@@ -67,6 +66,7 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
                     checkbox(
                         f"Select examples for '{entry.definition}'",
                         choices=entry.examples,
+                        instruction=str(),
                     ).ask()
                     or []
                 )
@@ -80,11 +80,9 @@ def run_cli(service: EnToEnService, words: list[str], path: str) -> None:
                 )
             )
 
-        if chosen_entries:
-            selections[word] = chosen_entries
-
-    notes = service.get_notes_as_strings_from_entries(selections)
-    service.save_notes_to_path(notes, path)
+    service.save_entries_txt(
+        entries=[str(entry) for entry in chosen_entries], path=path
+    )
 
 
 def cli_main():

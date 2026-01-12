@@ -6,10 +6,10 @@ DICTIONARIES = {
 }
 
 from backend.dictionary import DICTIONARIES
-from backend.dictionary.en.en.cambridge.service import EnToEnService
+from backend.dictionary.en.en.cambridge.service import CambridgeDictionaryService
 
 SERVICES = {
-    ("en", "en"): EnToEnService,
+    ("en", "en"): CambridgeDictionaryService,
     # ("en", "jp"): EnToJpService,
     # ("jp", "en"): JpToEnService,
 }
