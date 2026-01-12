@@ -1,12 +1,11 @@
-from backend.dictionary.en.en.cambridge import CambridgeDictionary
+from backend.dictionary.cambridge.service import CambridgeDictionaryService
+from backend.dictionary.cambridge import CambridgeDictionary
 
 DICTIONARIES = {
     "cambridge": CambridgeDictionary,
     # "collins": CollinsDictionary
 }
 
-from backend.dictionary import DICTIONARIES
-from backend.dictionary.en.en.cambridge.service import CambridgeDictionaryService
 
 SERVICES = {
     ("en", "en"): CambridgeDictionaryService,

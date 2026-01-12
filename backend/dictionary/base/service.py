@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import os
 
-from backend.dictionary.base_dictionary import BaseDictionary
+from backend.dictionary.base.dictionary import BaseDictionary
 
 
 class BaseService(ABC):

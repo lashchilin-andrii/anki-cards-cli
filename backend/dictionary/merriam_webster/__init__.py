@@ -1,6 +1,6 @@
 import requests
 
-from backend.dictionary.base_dictionary import BaseDictionary
+from backend.dictionary.base.dictionary import BaseDictionary
 
 CAMBRIDGE_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key=e0421ef0-ba6d-423d-b246-4946c719d94a"
 

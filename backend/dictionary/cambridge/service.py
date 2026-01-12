@@ -1,5 +1,5 @@
-from backend.dictionary.base_service import BaseService
-from backend.dictionary.en.en.cambridge.model import Entry
+from backend.dictionary.base.service import BaseService
+from backend.dictionary.cambridge.model import Entry
 import os
 from datetime import date
 

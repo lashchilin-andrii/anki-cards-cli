@@ -1,6 +1,6 @@
 import pytest
-from backend.dictionary.en.en.merriam_webster import MerriamWebsterDictionary
-from backend.dictionary.en.en.merriam_webster.model import Word
+from backend.dictionary.merriam_webster import MerriamWebsterDictionary
+from backend.dictionary.merriam_webster.model import Word
 
 
 def test_merriam_webster():
