@@ -10,7 +10,7 @@ Streamline your vocabulary learning by quickly generating and importing word car
 ### 1. Selecting Definitions for a Word
 Choose one or more definitions to include on your card.
 
-![Selecting definitions](https://github.com/lashchilin-andrii/anki-cards-cli/tree/screens/1.png)
+![Selecting definitions](https://github.com/lashchilin-andrii/anki-cards-cli/blob/screens/1.png)
 
 ---
 
@@ -19,21 +19,21 @@ Pick example sentences for each definition to provide context.
 
 | First Definition | Second Definition |
 |------------------|-------------------|
-| ![Examples for 1st definition](https://github.com/lashchilin-andrii/anki-cards-cli/tree/screens/2.png) | ![Examples for 2nd definition](https://github.com/lashchilin-andrii/anki-cards-cli/tree/screens/3.png) |
+| ![Examples for 1st definition](https://github.com/lashchilin-andrii/anki-cards-cli/blob/screens/2.png) | ![Examples for 2nd definition](https://github.com/lashchilin-andrii/anki-cards-cli/blob/screens/3.png) |
 
 ---
 
 ### 3. Importing into Anki
 Easily export your selected words, definitions, and examples, then import them into Anki.
 
-![Importing into Anki](https://github.com/lashchilin-andrii/anki-cards-cli/tree/screens/4.png)
+![Importing into Anki](https://github.com/lashchilin-andrii/anki-cards-cli/blob/screens/4.png)
 
 ---
 
 ### 4. Overview in Anki
 See your new cards directly inside Anki — ready for spaced repetition.
 
-![Overview in Anki](https://github.com/lashchilin-andrii/anki-cards-cli/tree/screens/5.png)
+![Overview in Anki](https://github.com/lashchilin-andrii/anki-cards-cli/blob/screens/5.png)
 
 ---
 
