@@ -59,24 +59,12 @@ def run_cli(service: BaseService, words: list[str], path: str) -> None:
             if entry.definition not in selected_defs:
                 continue
 
-            selected_examples: list[str] = []
-
-            if entry.examples:
-                selected_examples = (
-                    checkbox(
-                        f"Select examples for '{entry.definition}'",
-                        choices=entry.examples,
-                        instruction="",
-                    ).ask()
-                    or []
-                )
-
             chosen_entries.append(
                 Entry(
                     spelling=entry.spelling,
                     transcription=entry.transcription,
                     definition=entry.definition,
-                    examples=selected_examples,
+                    examples=entry.examples or [],
                 )
             )
 
